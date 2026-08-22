@@ -1,0 +1,88 @@
+name: Planner Backend
+
+on:
+  repository_dispatch:
+    types:
+      - planner_run
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: "Project ID"
+        required: true
+      action:
+        description: "start or resume"
+        required: true
+        default: "start"
+      openrouter_key:
+        description: "OpenRouter API Key"
+        required: false
+
+concurrency:
+  group: planner-${{ github.event.client_payload.project_id || github.event.inputs.project_id }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code (main branch)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: code
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout or create data branch
+        run: |
+          cd code
+          git fetch origin planner-data 2>/dev/null || true
+          if git show-ref --verify --quiet refs/remotes/origin/planner-data; then
+            git checkout -b planner-data origin/planner-data
+          else
+            git checkout --orphan planner-data
+            git rm -rf . 2>/dev/null || true
+            mkdir -p projects
+            echo '{"branch":"planner-data","created_at":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > projects/.keep
+            git add projects/.keep
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "init: create planner-data branch"
+            git push origin planner-data
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run orchestrator
+        env:
+          OPENROUTER_API_KEY: ${{ github.event.client_payload.openrouter_key || github.event.inputs.openrouter_key || secrets.OPENROUTER_API_KEY }}
+          PROJECT_ID: ${{ github.event.client_payload.project_id || github.event.inputs.project_id }}
+          ACTION: ${{ github.event.client_payload.action || github.event.inputs.action || 'start' }}
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd code
+          python backend/run.py \
+            --data-dir . \
+            --project-id "$PROJECT_ID" \
+            --action "$ACTION"
+
+      - name: Commit updated project state
+        run: |
+          cd code
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add projects/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "planner: update ${{ github.event.client_payload.project_id || github.event.inputs.project_id }}"
+            git push origin planner-data
+          fi
