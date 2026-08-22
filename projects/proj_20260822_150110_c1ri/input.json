@@ -1,0 +1,10 @@
+{
+  "project_id": "proj_20260822_150110_c1ri",
+  "created_at": "2026-08-22T14:01:10.246Z",
+  "prompt": "A simple offiline gps based speed counter , that calculate your speed using ur phone gps , one html ,but highly acvurate and have a run feature that draw a graphe based on the speed per time",
+  "options": {
+    "max_questions_per_batch": 0,
+    "interrupt_only_on_hard_dependency": true
+  },
+  "files": []
+}
