@@ -1,0 +1,13 @@
+{
+  "project_id": "proj_20260822_145131_ph73",
+  "status": "CREATED",
+  "ui_view": "PROGRESS_SPINNER",
+  "stage": "PROJECT_CREATED",
+  "updated_at": "2026-08-22T13:51:31.296Z",
+  "progress": {
+    "completed_steps": [],
+    "next_step": "FILES_PARSED"
+  },
+  "error": null,
+  "artifacts": []
+}
