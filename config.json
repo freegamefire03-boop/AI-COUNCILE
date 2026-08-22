@@ -1,0 +1,33 @@
+{
+  "version": "0.0.1",
+  "github": {
+    "owner": "freegamefire03-boop",
+    "repo": "planning-council-v0",
+    "data_branch": "planner-data",
+    "pages_base_url": "https://freegamefire03-boop.github.io/planning-council-v0/"
+  },
+  "llm": {
+    "provider": "openrouter",
+    "primary_model": "openrouter/auto",
+    "mode": "random_free",
+    "concurrency": 1,
+    "min_interval_seconds": 4,
+    "max_retries": 3,
+    "timeout_seconds": 120,
+    "backoff_multiplier": 2,
+    "jitter": true,
+    "fallback_models": [
+      "openrouter/auto",
+      "meta-llama/llama-4-scout:free",
+      "meta-llama/llama-3.3-70b-instruct:free",
+      "google/gemma-3-12b-it:free",
+      "microsoft/phi-4:free",
+      "qwen/qwen3-8b:free"
+    ]
+  },
+  "specialists": {
+    "max_words_default": 400,
+    "max_words_redteam": 300,
+    "max_words_brief": 800
+  }
+}
