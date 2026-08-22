@@ -8,61 +8,70 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-      background: #0d0d0d;
-      color: #e0e0e0;
-      min-height: 100vh;
-      padding: 40px 20px;
+      background: #0d0d0d; color: #e0e0e0;
+      min-height: 100vh; padding: 40px 20px;
     }
-    .container { max-width: 760px; margin: 0 auto; }
-    h1 { font-size: 1.3rem; font-weight: 600; color: #7dd3fc; letter-spacing: 0.04em; margin-bottom: 6px; }
-    .subtitle { font-size: 0.78rem; color: #555; margin-bottom: 32px; }
-    label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .container { max-width: 780px; margin: 0 auto; }
+    h1 { font-size: 1.3rem; font-weight: 600; color: #7dd3fc; letter-spacing: 0.04em; margin-bottom: 4px; }
+    .subtitle { font-size: 0.78rem; color: #444; margin-bottom: 28px; }
+    label { display: block; font-size: 0.72rem; color: #666; margin-bottom: 5px; letter-spacing: 0.06em; text-transform: uppercase; }
     input[type="text"], input[type="password"], textarea {
-      width: 100%;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 6px;
-      color: #e0e0e0;
-      font-family: inherit;
-      font-size: 0.88rem;
-      padding: 10px 12px;
-      outline: none;
-      transition: border-color 0.15s;
-      margin-bottom: 18px;
+      width: 100%; background: #161616; border: 1px solid #252525;
+      border-radius: 6px; color: #e0e0e0; font-family: inherit;
+      font-size: 0.88rem; padding: 9px 12px; outline: none;
+      transition: border-color 0.15s; margin-bottom: 16px;
     }
     input:focus, textarea:focus { border-color: #7dd3fc; }
-    textarea { resize: vertical; min-height: 100px; }
+    textarea { resize: vertical; min-height: 90px; }
     button {
-      background: #7dd3fc;
-      color: #0d0d0d;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 24px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, opacity 0.15s;
+      background: #7dd3fc; color: #0d0d0d; border: none; border-radius: 6px;
+      padding: 10px 22px; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: background 0.15s, opacity 0.15s;
     }
     button:hover { background: #93d9fd; }
     button:disabled { opacity: 0.4; cursor: not-allowed; }
-    #status-section { margin-top: 32px; display: none; }
-    .status-bar { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: #aaa; margin-bottom: 16px; }
-    .spinner { width: 14px; height: 14px; border: 2px solid #333; border-top-color: #7dd3fc; border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+    .divider { border: none; border-top: 1px solid #1c1c1c; margin: 24px 0; }
+    .section-title { font-size: 0.72rem; color: #444; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
+
+    /* ── Status panel ── */
+    #status-section { display: none; margin-top: 28px; }
+    .proj-id { font-size: 0.7rem; color: #2a2a2a; font-family: monospace; margin-bottom: 8px; }
+    .status-bar { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: #888; margin-bottom: 12px; }
+    .spinner { width: 13px; height: 13px; border: 2px solid #2a2a2a; border-top-color: #7dd3fc; border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .stage-label { font-size: 0.78rem; color: #7dd3fc; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 10px; }
-    .steps-list { list-style: none; font-size: 0.78rem; color: #555; margin-bottom: 20px; line-height: 1.8; }
+    .stage-lbl { font-size: 0.75rem; color: #7dd3fc; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 10px; }
+    .steps-list { list-style: none; font-size: 0.78rem; color: #3a3a3a; margin-bottom: 18px; line-height: 1.9; }
     .steps-list li.done { color: #4ade80; }
     .steps-list li.done::before { content: "✓ "; }
     .steps-list li.active { color: #7dd3fc; }
     .steps-list li.active::before { content: "▶ "; }
-    #events-log { background: #111; border: 1px solid #222; border-radius: 6px; padding: 12px; font-size: 0.73rem; color: #555; max-height: 120px; overflow-y: auto; margin-bottom: 20px; font-family: monospace; line-height: 1.6; }
-    #result-section { display: none; margin-top: 12px; }
-    #plan-output { background: #111; border: 1px solid #2a2a2a; border-radius: 6px; padding: 20px; font-size: 0.84rem; line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: #d0d0d0; max-height: 70vh; overflow-y: auto; }
-    .error-box { background: #1a0a0a; border: 1px solid #4a1a1a; border-radius: 6px; padding: 14px; color: #f87171; font-size: 0.82rem; margin-bottom: 16px; }
-    .retry-btn { background: #374151; color: #e0e0e0; font-size: 0.78rem; padding: 7px 16px; margin-left: 10px; }
-    .section-title { font-size: 0.78rem; color: #555; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
-    .divider { border: none; border-top: 1px solid #1e1e1e; margin: 24px 0; }
-    #project-id-display { font-size: 0.72rem; color: #333; font-family: monospace; margin-bottom: 8px; }
+    #events-log { background: #0e0e0e; border: 1px solid #1e1e1e; border-radius: 6px; padding: 10px 12px; font-size: 0.71rem; color: #444; max-height: 100px; overflow-y: auto; margin-bottom: 18px; font-family: monospace; line-height: 1.6; }
+    .error-box { background: #140808; border: 1px solid #3a1010; border-radius: 6px; padding: 12px; color: #f87171; font-size: 0.8rem; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .retry-btn { background: #2a2a2a; color: #ccc; font-size: 0.76rem; padding: 6px 14px; flex-shrink: 0; }
+
+    /* ── Plan output ── */
+    #result-section { display: none; margin-top: 10px; }
+    #plan-output { background: #0e0e0e; border: 1px solid #222; border-radius: 6px; padding: 18px 20px; font-size: 0.84rem; line-height: 1.75; white-space: pre-wrap; word-break: break-word; color: #d0d0d0; max-height: 65vh; overflow-y: auto; }
+
+    /* ── History panel ── */
+    #history-section { margin-top: 32px; }
+    .history-list { display: flex; flex-direction: column; gap: 8px; }
+    .history-item {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 7px;
+      padding: 12px 14px; cursor: pointer; transition: border-color 0.15s;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+    }
+    .history-item:hover { border-color: #333; }
+    .history-item.active-item { border-color: #7dd3fc33; }
+    .h-prompt { font-size: 0.82rem; color: #bbb; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .h-meta { font-size: 0.68rem; color: #333; text-align: right; flex-shrink: 0; line-height: 1.7; }
+    .badge { display: inline-block; font-size: 0.65rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; letter-spacing: 0.04em; }
+    .badge-done { background: #14291a; color: #4ade80; }
+    .badge-running { background: #0f1f2e; color: #7dd3fc; }
+    .badge-blocked { background: #291414; color: #f87171; }
+    .badge-created { background: #1e1e1e; color: #555; }
+    #history-empty { font-size: 0.78rem; color: #2a2a2a; padding: 10px 0; }
+    #history-loading { font-size: 0.75rem; color: #333; padding: 8px 0; }
   </style>
 </head>
 <body>
@@ -83,13 +92,14 @@
 
   <hr class="divider" />
 
+  <!-- Active run status -->
   <div id="status-section">
-    <div id="project-id-display"></div>
+    <div class="proj-id" id="project-id-display"></div>
     <div class="status-bar">
       <div class="spinner" id="spinner"></div>
       <span id="status-text">Initializing...</span>
     </div>
-    <div class="stage-label" id="stage-label"></div>
+    <div class="stage-lbl" id="stage-label"></div>
     <ul class="steps-list" id="steps-list"></ul>
     <div class="section-title">Log</div>
     <div id="events-log"></div>
@@ -99,11 +109,22 @@
     </div>
   </div>
 
+  <!-- Plan result -->
   <div id="result-section">
     <div class="section-title" style="margin-bottom:12px">Final Plan</div>
     <div id="plan-output"></div>
   </div>
+
+  <!-- History -->
+  <div id="history-section">
+    <hr class="divider" />
+    <div class="section-title">Project History</div>
+    <div id="history-loading">Loading history...</div>
+    <div id="history-empty" style="display:none">No projects yet.</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
 </div>
+
 <script src="app.js"></script>
 </body>
 </html>
