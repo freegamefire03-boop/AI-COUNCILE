@@ -1,0 +1,10 @@
+{
+  "project_id": "proj_20260822_185547_296a",
+  "created_at": "2026-08-22T17:55:47.281Z",
+  "prompt": "A simple html fsingle.file that calculate my speed based on.gps no internet needed , with high accuracy",
+  "options": {
+    "max_questions_per_batch": 0,
+    "interrupt_only_on_hard_dependency": true
+  },
+  "files": []
+}
