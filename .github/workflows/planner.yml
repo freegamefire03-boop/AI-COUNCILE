@@ -32,14 +32,12 @@ jobs:
         with:
           ref: main
           path: code
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout data branch (planner-data)
         uses: actions/checkout@v4
         with:
           ref: planner-data
           path: data
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -54,21 +52,10 @@ jobs:
           OPENROUTER_API_KEY: ${{ github.event.client_payload.openrouter_key || github.event.inputs.openrouter_key || secrets.OPENROUTER_API_KEY }}
           PROJECT_ID: ${{ github.event.client_payload.project_id || github.event.inputs.project_id }}
           ACTION: ${{ github.event.client_payload.action || github.event.inputs.action || 'start' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
         run: |
           python code/backend/run.py \
             --data-dir data \
             --project-id "$PROJECT_ID" \
             --action "$ACTION"
-
-      - name: Commit updated project state
-        run: |
-          cd data
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add projects/
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "planner: update ${{ github.event.client_payload.project_id || github.event.inputs.project_id }}"
-            git push origin planner-data
-          fi
